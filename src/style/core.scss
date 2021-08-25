@@ -15,8 +15,7 @@
     "Noto Color Emoji";
 }
 @mixin heading-font {
-  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: Poppins, sans-serif;
 }
 
 /* Variables */
@@ -33,4 +32,5 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black: #000 !default;
 
-$primary: #fed136 !default;
+// $primary: #fed136 !default;
+$primary: #16327a !default;

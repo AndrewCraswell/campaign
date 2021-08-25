@@ -22,6 +22,21 @@
         "placeholder" : "created by"
       }
     },
+    "short_description" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1,heading2,heading3,heading4,heading5,heading6",
+        "label" : "short_description"
+      }
+    },
+    "image" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : { },
+        "thumbnails" : [ ],
+        "label" : "image"
+      }
+    },
     "description" : {
       "type" : "StructuredText",
       "config" : {

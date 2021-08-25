@@ -1,20 +1,17 @@
-// Example {PrismicAuthor.url}.js file
-
 import React from "react";
 import { graphql } from "gatsby";
-import Navbar from "../views/Navbar";
+import Navbar from "../components/Navbar";
 import Goals from "../components/Goals/Index";
 import GoalsHeader from "../components/Goals/Title";
 import Carousel from "../components/Carousel";
+import Vision from "../components/Vision";
+import VisionMessage from "../components/VisionMessage";
+import Footer from "../components/Footer";
 import "../style/main.scss";
-import SEO from "../components/SEO"
-export const AuthorTemplate = (props) => {
+import SEO from "../components/SEO";
+export const Home = (props) => {
   const { data } = props;
-  console.log({ hero: data.allPrismicHerosection });
   let heroSection = data.allPrismicHerosection.nodes[0].data;
-
-  console.log({ heroSection });
-
   const {
     section_title,
     description_1,
@@ -31,12 +28,22 @@ export const AuthorTemplate = (props) => {
     btn_url_2,
   } = data.prismicGoals.data;
   const { description_3, title_3, image_3 } = data.prismicGoals.data;
-const {description,title} =data.prismicHomeseo.data;
+  const { description, title } = data.prismicHomeseo.data;
   return (
     <div>
       <SEO title={title.text} description={description.text} />
       <Navbar
-        anchors={["Stay Connected", "Volunteer", "Facebook", "Make a Donation"]}
+        anchors={[
+          { title: "Stay Connected", link: "/stay-connected" },
+          { title: "Volunteer", link: "" },
+          { title: "Blogs", link: "/blogs" },
+
+          {
+            title: "Facebook",
+            link: "https://www.facebook.com/williambillharriformayor",
+          },
+          { title: "Make a Donation", link: "/make-a-donation" },
+        ]}
         frontmatter={{
           brand: "William Harris",
           title: "For Mayor of Fuquay-Varina",
@@ -45,63 +52,117 @@ const {description,title} =data.prismicHomeseo.data;
       />
 
       <Carousel data={heroSection} />
-      <GoalsHeader title={section_title.text} />
+      <Vision data={data?.prismicVision?.data} />
+      {/* goals section */}
+      <VisionMessage data={data?.prismicVisionmessage?.data} />
 
-      <Goals
-        description={description_1?.text}
-        title={title_1?.text}
-        image={image_1}
-        btn_text={btn_text_1.text}
-        btn_url={btn_url_1.text}
+      <GoalsHeader title={section_title.text} 
+      
+      data1={{description:description_1?.text,
+      title:title_1?.text,
+      image:image_1,
+      btn_text:btn_text_1.text,
+      btn_url:btn_url_1.text}}
+      data2={{ description:description_2?.text,
+        title:title_2?.text,
+        image:image_1,
+        btn_text:btn_text_1.text,
+        btn_url:btn_url_1.text}}
+        data3={{description:description_3?.text,
+        title:title_3?.text}}
       />
-      <Goals
-        description={description_2?.text}
-        title={title_2?.text}
-        image={image_2}
-        index={1}
-        btn_text={btn_text_2.text}
-        btn_url={btn_url_2.text}
-      />
-      <Goals
-        description={description_3?.text}
-        title={title_3?.text}
-        image={image_3}
-      />
+
+     
+      {/* Experience section */}
+
+      <Footer />
     </div>
   );
 };
 
 export const query = graphql`
-
   query HeroSection {
-     prismicHomeseo {
-        data {
-          title {
-            text
-          }
-          description {
-            text
-          }
-        }
-      }
-    
     allPrismicHerosection {
       nodes {
         data {
+          heroimages {
+            image {
+              localFile {
+                publicURL
+              }
+            }
+          }
           title {
             text
-          }
-          heroimage {
-            localFile {
-              publicURL
-            }
-            fluid {
-              src
-            }
           }
         }
       }
     }
+    prismicVisionmessage {
+      data {
+        image {
+          localFile {
+            publicURL
+          }
+        }
+        message {
+          text
+        }
+      }
+    }
+    prismicExperience {
+      data {
+        title {
+          text
+        }
+        description {
+          text
+        }
+        experiences {
+          description1 {
+            html
+          }
+          title {
+            text
+          }
+        }
+      }
+    }
+    prismicVision {
+      data {
+        btn_text {
+          text
+        }
+        btn_url {
+          text
+        }
+        description {
+          text
+        }
+        image {
+          localFile {
+            publicURL
+          }
+        }
+        subtitle {
+          text
+        }
+        title {
+          text
+        }
+      }
+    }
+    prismicHomeseo {
+      data {
+        title {
+          text
+        }
+        description {
+          text
+        }
+      }
+    }
+
     prismicGoals {
       data {
         btn_text_1 {
@@ -154,7 +215,19 @@ export const query = graphql`
         }
       }
     }
+
+    prismicGallery {
+      data {
+        images {
+          image {
+            localFile {
+              publicURL
+            }
+          }
+        }
+      }
+    }
   }
 `;
 
-export default AuthorTemplate;
+export default Home;

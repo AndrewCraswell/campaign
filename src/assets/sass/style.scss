@@ -53,3 +53,12 @@
 @import "./elements/_quote_with_img";
 @import "./elements/_idology_single_item";
 @import "./elements/_contribute_single_item";
+
+.multine-ellipsis {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}

@@ -1,119 +1,26 @@
-// const path = require("path");
-// const getBaseUrl = require("./src/utils/getBaseUrl");
-// const { defaultLang, langTextMap = {} } = require("./config/site");
+const path = require(`path`);
+const { createFilePath } = require(`gatsby-source-filesystem`);
 
-// /**
-//  * add fileName to node for markdown files
-//  */
-// exports.onCreateNode = ({ node, actions }) => {
-//   const { createNodeField } = actions;
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+  const result = await graphql(`
+    query {
+    allPrismicBlogs {
+        nodes {
+          id
+        }
+      }
+    }
+  `);
 
-//   if (node.internal.type === "MarkdownRemark") {
-//     const fileName = path.basename(node.fileAbsolutePath, ".md");
-//     createNodeField({
-//       node,
-//       name: "fileName",
-//       value: fileName,
-//     });
 
-//     createNodeField({
-//       node,
-//       name: "directoryName",
-//       value: path.basename(path.dirname(node.fileAbsolutePath)),
-//     });
-//   }
-// };
-
-// /**
-//  * define nullable items
-//  */
-// exports.createSchemaCustomization = ({ actions }) => {
-//   const { createTypes } = actions;
-//   const typeDefs = [
-//     "type MarkdownRemark implements Node { frontmatter: Frontmatter }",
-//     `type Frontmatter {
-//       anchor: String
-//       jumpToAnchor: String
-//       jumpToAnchorText: String
-//       social: Social
-//       services: [Service]
-//       teamMember: [TeamMember]
-//     }`,
-//     `type TeamMember {
-//       social: Social
-//     }`,
-//     `type Service {
-//       iconName: String
-//       imageFileName: String
-//       header: String
-//       content: String
-//     }`,
-//     `
-//     type Social {
-//       twitter: String
-//       facebook: String
-//       linkedin: String
-//       medium: String
-//       github: String
-//     }
-//     `,
-//   ];
-
-//   createTypes(typeDefs);
-// };
-
-// /**
-//  * generate i18n top pages
-//  */
-// exports.createPages = ({ graphql, actions: { createPage } }) => {
-//   const topIndex = path.resolve("./src/templates/top-index.jsx");
-//   const result =  graphql(
-//     `
-//       {
-//         prismicBlogs {
-//           data {
-//             description {
-//               html
-//             }
-//             title {
-//               text
-//             }
-//           }
-//         }
-//       }
-//     `
-//   )
-//   console.log("eee",result)
-//   return new Promise((resolve, reject) => {
-//     resolve(
-//       graphql(
-//         `
-//           {
-//             allMarkdownRemark {
-//               distinct(field: fields___langKey)
-//             }
-//           }
-//         `,
-//       ).then(({ errors, data }) => {
-//         if (errors) {
-//           console.log(errors);
-//           reject(errors);
-//         }
-
-//         data.allMarkdownRemark.distinct.forEach((langKey) => {
-//           createPage({
-//             path: getBaseUrl(defaultLang, langKey),
-//             component: topIndex,
-//             context: {
-//               langKey,
-//               defaultLang,
-//               langTextMap,
-//             },
-//           });
-//         });
-
-//         return null;
-//       }),
-//     );
-//   });
-// };
+  result.data.allPrismicBlogs.nodes.forEach((node) => {
+    createPage({
+      path: `/blog-details/${node.id}`,
+      component: path.resolve(`./src/templates/blog-details.js`),
+      context: {
+        id: node.id,
+      },
+    });
+  });
+};

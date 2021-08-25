@@ -5,9 +5,7 @@ import { Button } from "react-bootstrap";
 import { Link } from "gatsby";
 export const GoalsCard = (props) => {
   const { description, title, image, btn_text, btn_url, index } = props;
-
-  console.log({ title, description, image }, "===========");
-  return (
+return (
     <div className="container mt-2">
       <div className="vision-area bg-white">
         <div className="row">

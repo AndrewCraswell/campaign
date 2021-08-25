@@ -30,7 +30,22 @@ module.exports = {
         path: `${__dirname}/static/`,
       },
     },
-
+    {
+      resolve: "gatsby-plugin-firebase",
+      options: {
+        credentials: {
+          apiKey: "AIzaSyBbSHanqu_cRLqYh4fNgB8pOhPzgJ6W25U",
+          authDomain: "william-bc5f1.firebaseapp.com",
+          databaseURL: "https://william-bc5f1-default-rtdb.firebaseio.com",
+          projectId: "william-bc5f1",
+          storageBucket: "william-bc5f1.appspot.com",
+          messagingSenderId: "965567264921",
+          appId: "1:965567264921:web:fe1e7f6a1490c1557a2008",
+          measurementId: "G-4CBWX0SMW7"
+        
+        }
+      }
+    },
     {
       resolve: `gatsby-source-prismic`,
       options: {
@@ -42,11 +57,15 @@ module.exports = {
           blogs: require("./custom_types/blogs.json"),
           herosection: require("./custom_types/heroSection.json"),
           "hero-section": require("./custom_types/about.json"),
-          coverimagesection:require("./custom_types/coverImageSection.json"),
-          vision:require("./custom_types/vision.json"),
-          goals:require("./custom_types/goals.json"),
-          experience:require("./custom_types/experience.json"),
-          homeseo:require("./custom_types/homeSEO.json"),
+          coverimagesection: require("./custom_types/coverImageSection.json"),
+          vision: require("./custom_types/vision.json"),
+          goals: require("./custom_types/goals.json"),
+          experience: require("./custom_types/experience.json"),
+          homeseo: require("./custom_types/homeSEO.json"),
+          visionmessage: require("./custom_types/visionmessage.json"),
+          contact: require("./custom_types/contact.json"),
+          gallery: require("./custom_types/gallery.json"),
+          donation:require("./custom_types/donation.json")
         },
       },
     },
@@ -127,14 +146,6 @@ module.exports = {
               "https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap",
           },
         ],
-      },
-    },
-    {
-      resolve: "gatsby-plugin-i18n",
-      options: {
-        langKeyDefault: defaultLang,
-        useLangKeyLayout: false,
-        pagesPaths: ["/content/"],
       },
     },
   ],
